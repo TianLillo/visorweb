@@ -1,0 +1,325 @@
+<html>
+
+<head>
+    <meta charset='utf-8' />
+    <title>Aixecaments topogràfics</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.css' rel='stylesheet' />
+
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6.5.0/turf.min.js"></script>
+
+    <link href='css/estilobase.css' rel='stylesheet' />
+     
+    <button id="filtro-mandat" class="mapboxgl-ctrl-icon" title="Filtrar por Mandato" aria-label="Filtrar por Mandato">
+      <select id="select-mandato">
+        <option value="">Sensa filtre</option>
+        <option value="2008-2011">2008-2011</option>
+        <option value="2012-2015">2012-2015</option>
+        <option value="2016-2019">2016-2019</option>
+        <option value="2020-2023">2020-2023</option>
+        <option value="2024-2027">2024-2027</option>
+      </select>
+    </button>
+    
+    <button id="filtro-fet" class="mapboxgl-ctrl-icon" title="Filtrar por Tipo" aria-label="Filtrar por Tipo">
+      <select id="select-fet">
+        <option value="">Sensa filtre</option>
+        <option value="Intern">Intern</option>
+        <option value="Extern">Extern</option>
+        <option value="S/I">S/I</option>
+      </select>
+    </button>
+    
+    <button id="filtro-tecnologia" class="mapboxgl-ctrl-icon" title="Filtrar por tecnologia" aria-label="Filtrar por tecnologia">
+      <select id="select-tecnologia">
+        <option value="">Sensa filtre</option>
+        <option value="ET/GPS">ET y GPS</option>
+        <option value="GPS">GPS</option>
+        <option value="LS">Laser scanner</option>
+        <option value="NIVELL">Nivell</option>
+      </select>
+    </button>
+      
+    <button id="filtro-as_built" class="mapboxgl-ctrl-icon" title="Filtrar por As-Built" aria-label="Filtrar por As-Built">
+      <select id="select-as_built">
+        <option value="">Sensa filtre</option>
+        <option value="si">Si</option>
+        <option value="no">No</option>
+      </select>
+    </button>
+
+
+    <button id="filtro-municipi" class="mapboxgl-ctrl-icon" title="Filtrar por Municipio" aria-label="Filtrar por Municipio">
+      <select id="select-municipi">
+        <option value="">Sensa filtre</option>
+        <option value="Badalona">Badalona</option>
+        <option value="Badia del Vallès">Badia del Vallès</option>
+        <option value="Barberà del Vallès">Barberà del Vallès</option>
+        <option value="Barcelona">Barcelona</option>
+        <option value="Begues">Begues</option>
+        <option value="Castellbisbal">Castellbisbal</option>
+        <option value="Castelldefels">Castelldefels</option>
+        <option value="Cerdanyola del Vallès">Cerdanyola del Vallès</option>
+        <option value="Cervelló">Cervelló</option>
+        <option value="Corbera de Llobregat">Corbera de Llobregat</option>
+        <option value="Cornellà de Llobregat">Cornellà de Llobregat</option>
+        <option value="El Masnou">El Masnou</option>
+        <option value="El Papiol">El Papiol</option>
+        <option value="El Prat de Llobregat">El Prat de Llobregat</option>
+        <option value="Esplugues de Llobregat">Esplugues de Llobregat</option>
+        <option value="Gavà">Gavà</option>
+        <option value="L'Hospitalet de Llobregat">L'Hospitalet de Llobregat</option>
+        <option value="La Palma de Cervelló">La Palma de Cervelló</option>
+        <option value="Molins de Rei">Molins de Rei</option>
+        <option value="Montcada i Reixac">Montcada i Reixac</option>
+        <option value="Montgat">Montgat</option>
+        <option value="Pallejà">Pallejà</option>
+        <option value="Ripollet">Ripollet</option>
+        <option value="Sant Adrià de Besòs">Sant Adrià de Besòs</option>
+        <option value="Sant Andreu de la Barca">Sant Andreu de la Barca</option>
+        <option value="Sant Boi de Llobregat">Sant Boi de Llobregat</option>
+        <option value="Sant Climent de Llobregat">Sant Climent de Llobregat</option>
+        <option value="Sant Cugat del Vallès">Sant Cugat del Vallès</option>
+        <option value="Sant Feliu de Llobregat">Sant Feliu de Llobregat</option>
+        <option value="Sant Joan Despí">Sant Joan Despí</option>
+        <option value="Sant Just Desvern">Sant Just Desvern</option>
+        <option value="Sant Vicenç dels Horts">Sant Vicenç dels Horts</option>
+        <option value="Santa Coloma de Cervelló">Santa Coloma de Cervelló</option>
+        <option value="Santa Coloma de Gramenet">Santa Coloma de Gramenet</option>
+        <option value="Tiana">Tiana</option>
+        <option value="Torrelles de Llobregat">Torrelles de Llobregat</option>
+        <option value="Viladecans">Viladecans</option>
+      </select>
+    </button>
+    
+    <button id="eliminar-filtros" class="mapboxgl-ctrl-icon" title="Treure filtres" aria-label="Treure filtres">Treure filtres</button>
+
+     <script>
+        mapboxgl.accessToken =
+          'pk.eyJ1IjoidGlhbmxpbGxvIiwiYSI6ImNsY3ludnBmODBhY2Izcm5vYzRibzd3YXoifQ.gOZiyMs0U6_TPz_qK1nvIw';
+        
+        var map;
+        var geoJsonUrl = 'datos/aixecaments.geojson';
+        var selectedPolygonId = null;
+        var marker = null; // Variable para almacenar la referencia al marcador
+
+        function init() {
+          map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/tianlillo/clskq3n7o009201qwakqj8vg2',
+            center: [2.16859, 41.3954],
+            zoom: 12,
+            maxZoom: 20,
+            attributionControl: false,
+            hash: true
+          });
+        
+          map.addControl(new mapboxgl.AttributionControl({
+            compact: true
+          }));
+          map.addControl(new mapboxgl.NavigationControl());
+        // Agregar el cuadro de búsqueda
+        var geocoder = new MapboxGeocoder({
+            accessToken: mapboxgl.accessToken,
+            mapboxgl: mapboxgl,
+            marker: false, // Desactivar marcador
+            placeholder: 'Buscar dirección',
+            bbox: [2.1066, 41.300, 2.2536, 44.1616], // Limitar búsqueda a esta área
+            countries: 'es' // Limitar búsqueda a España
+        });
+
+        map.addControl(geocoder);
+
+    // Evento que se activa al seleccionar un lugar desde el cuadro de búsqueda
+    geocoder.on('result', function(ev) {
+        var searchResult = ev.result.geometry;
+        var searchResultCoords = [searchResult.coordinates[0], searchResult.coordinates[1]];
+
+        // Eliminar el marcador existente si hay uno
+        if (marker) {
+            marker.remove();
+        }
+
+        // Agregar un nuevo marcador en la ubicación de la búsqueda
+        marker = new mapboxgl.Marker()
+            .setLngLat(searchResultCoords)
+            .addTo(map);
+    });
+        
+          // Cargar el archivo GeoJSON y agregarlo al mapa
+          map.on('load', function() {
+    // Añadir la capa de polígonos 'aixecaments.geojson'
+            map.addSource('aixecaments-source', {
+                'type': 'geojson',
+                'data': 'datos/aixecaments.geojson'
+            });
+
+            map.addLayer({
+                'id': 'aixecaments-layer',
+                'type': 'fill',
+                'source': 'aixecaments-source',
+                'paint': {
+                    'fill-color': '#C845C8',
+                    'fill-opacity': 0.5,
+                    'fill-outline-color': '#000'
+                }
+            });
+                // Añadir la capa de polígonos 'municipis.geojson'
+                map.addSource('municipis-source', {
+                'type': 'geojson',
+                'data': 'datos/municipis.geojson'
+            });
+
+            map.addLayer({
+                'id': 'municipis-layer',
+                'type': 'line',
+                'source': 'municipis-source',
+                'paint': {
+                    'line-color': '#000',
+                    'line-width': 1
+                }
+            });
+
+
+
+        
+            // Agregar un evento de clic a la capa de polígonos
+            map.on('click', 'aixecaments-layer', function(e) {
+              // Restaurar el estilo del polígono anteriormente seleccionado
+              if (selectedPolygonId !== null) {
+                map.setFeatureState({ source: 'aixecaments-source', id: selectedPolygonId }, { selected: false });
+              }
+        
+              // Obtener el ID del polígono seleccionado y resaltarlo
+              selectedPolygonId = e.features[0].id;
+              map.setFeatureState({ source: 'aixecaments-source', id: selectedPolygonId }, { selected: true });
+        
+              // Cambiar el estilo del polígono seleccionado
+              map.setPaintProperty('aixecaments-layer', 'fill-color', [
+                'case',
+                ['==', ['id'], selectedPolygonId], '#F6FF30', // Relleno amarillo para el polígono seleccionado
+                '#C845C8' // Relleno morado para los demás polígonos
+              ]);
+              map.setPaintProperty('aixecaments-layer', 'fill-outline-color', [
+                'case',
+                ['==', ['id'], selectedPolygonId], '#16F4E7', // Contorno turquesa para el polígono seleccionado
+                '#000' // Contorno negro para los demás polígonos
+              ]);
+        
+              var properties = e.features[0].properties;
+        
+              var popupContent = '<h3>' + properties.nom_aixeca + '</h3>' +
+                                 '<p>Fecha: ' + new Date(properties.fecha).toLocaleDateString() + '</p>' +
+                                 '<p>Mandato: ' + properties.mandat + '</p>' +
+                                 '<p>Tecnología: ' + properties.tecnologia + '</p>';
+        
+              new mapboxgl.Popup()
+                .setLngLat(e.lngLat)
+                .setHTML(popupContent)
+                .addTo(map);
+            });
+        
+            // Cambiar el cursor al pasar sobre los polígonos
+            map.on('mouseenter', 'aixecaments-layer', function() {
+              map.getCanvas().style.cursor = 'pointer';
+            });
+        
+            // Cambiar el cursor al salir de los polígonos
+            map.on('mouseleave', 'aixecaments-layer', function() {
+              map.getCanvas().style.cursor = '';
+            });
+        
+            // Cerrar el popup y restaurar el estilo del polígono al cerrar el popup
+            map.on('popupclose', function() {
+              // Restaurar el estilo del polígono anteriormente seleccionado
+              if (selectedPolygonId !== null) {
+                map.setFeatureState({ source: 'aixecaments-source', id: selectedPolygonId }, { selected: false });
+                selectedPolygonId = null;
+                // Restaurar el estilo original de los polígonos
+                map.setPaintProperty('aixecaments-layer', 'fill-color', '#C845C8');
+                map.setPaintProperty('aixecaments-layer', 'fill-outline-color', '#000');
+              }
+            });
+          });
+        }
+        
+// Mantener un registro de los filtros aplicados
+var filters = {};
+
+// Función para aplicar los filtros
+function applyFilters() {
+  // Convertir los filtros en un array de expresiones de filtro
+  var filterExpressions = Object.keys(filters).map(function(key) {
+    return ['==', key, filters[key]];
+  });
+  
+  // Aplicar los filtros
+  if (filterExpressions.length === 0) {
+    // Si no hay filtros activos, mostrar todos los polígonos
+    map.setFilter('aixecaments-layer', null);
+  } else {
+    // Combinar todas las expresiones de filtro con '&&'
+    var combinedFilter = ['all'].concat(filterExpressions);
+    map.setFilter('aixecaments-layer', combinedFilter);
+  }
+}
+
+// Escuchar el cambio en el menú desplegable de mandato
+document.getElementById('select-mandato').addEventListener('change', function() {
+  filters['mandat'] = this.value;
+  applyFilters();
+});
+
+// Escuchar el cambio en el menú desplegable de tipo "fet"
+document.getElementById('select-fet').addEventListener('change', function() {
+  filters['fet'] = this.value;
+  applyFilters();
+});
+
+// Escuchar el cambio en el menú desplegable de tipo "tecnologia"
+document.getElementById('select-tecnologia').addEventListener('change', function() {
+  filters['tecnologia'] = this.value;
+  applyFilters();
+});
+
+// Escuchar el cambio en el menú desplegable de tipo "asbuilt"
+document.getElementById('select-as_built').addEventListener('change', function() {
+  filters['as_built'] = this.value;
+  applyFilters();
+});
+
+// Escuchar el cambio en el menú desplegable de municipio
+document.getElementById('select-municipi').addEventListener('change', function() {
+  filters['municipi'] = this.value;
+  applyFilters();
+});
+
+// Escuchar el clic en el botón "Treure filtres"
+document.getElementById('eliminar-filtres').addEventListener('click', function() {
+  // Limpiar el registro de filtros
+  map.setFilter('aixecaments-layer', null);
+  // Restablecer los valores seleccionados en los selectores
+  document.getElementById('select-mandato').value = "";
+  document.getElementById('select-fet').value = "";
+  document.getElementById('select-tecnologia').value = "";
+  document.getElementById('select-as_built').value = "";
+  document.getElementById('select-municipi').value = "";
+  // Aplicar los filtros
+  applyFilters();
+});
+
+
+
+        </script>
+        
+</head>
+
+<body onload="init()">
+    <div id="map"></div>
+</body>
+
+</html>
