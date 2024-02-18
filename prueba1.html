@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>¡Segunda mano!</title>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.css' rel='stylesheet' />
+
+    <link href="css/styles.css" rel="stylesheet">
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&v=3.exp"></script>
+    <script type="text/javascript">
+        var map;
+        function initialize() {
+            var mapOptions = {
+                zoom: 16,
+                maxZoom: 18,
+                minZoom: 15,
+                backgroundColor: '#ff0000',
+                scaleControl: true,
+                fullscreenControl: false,
+                center: new google.maps.LatLng(41.39230085135724, 2.175667404444539)
+            };
+            map = new google.maps.Map(document.getElementById('map'),
+                mapOptions);
+
+            var product = {
+                lat: 41.39167304441456,
+                lng: 2.1758145415515173,
+                name: 'Silla vieja pero restaurada',
+                img: 'p-chair.jpg',
+                desc: 'Nunc ante quam, malesuada et rhoncus quis, hendrerit id orci. Cras purus ipsum, semper eget sollicitudin vel, molestie mattis nibh.'
+            };
+
+            var point = new google.maps.LatLng(product.lat, product.lng);
+            var pOptions = {
+                position: point,
+                map: map,
+                title: product.name + ': ' + product.desc
+            };
+            var marker = new google.maps.Marker(pOptions);
+
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+</head>
+<body>
+<div class="header">
+    <p><img src="sj-logo.png"/></p>
+</div>
+<div class="menu">
+    <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="destacados.html">Destacados</a></li>
+        <li><a href="mapa.html">Mapa</a></li>
+    </ul>
+</div>
+<div class="wrapper">
+    <h1>Venta de productos de segunda mano</h1>
+    <div id="map"></div>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <strong>Suspendisse elementum nulla</strong> quis euismod
+
+    </p>
+
+    <hr/>
+
+
+    </div>
+    <h2>Sed aliquet mi vel quam luctus</h2>
+    <p class="product-main-image"><img src="enlaplaya.jpg" class="product-image"/></p>
+    <p class="more-info">In orci nisl, posuere in volutpat a, ultricies non mi. Mauris a vehicula magna, sed tincidunt
+        urna.
+    </p>
+    <p>Fusce nec nisi metus.
+    </p>
+</div>
+</body>
+</html>

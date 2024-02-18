@@ -51,50 +51,6 @@
         <option value="no">No</option>
       </select>
     </button>
-
-
-    <button id="filtro-municipi" class="mapboxgl-ctrl-icon" title="Filtrar por Municipio" aria-label="Filtrar por Municipio">
-      <select id="select-municipi">
-        <option value="">Sensa filtre</option>
-        <option value="Badalona">Badalona</option>
-        <option value="Badia del Vallès">Badia del Vallès</option>
-        <option value="Barberà del Vallès">Barberà del Vallès</option>
-        <option value="Barcelona">Barcelona</option>
-        <option value="Begues">Begues</option>
-        <option value="Castellbisbal">Castellbisbal</option>
-        <option value="Castelldefels">Castelldefels</option>
-        <option value="Cerdanyola del Vallès">Cerdanyola del Vallès</option>
-        <option value="Cervelló">Cervelló</option>
-        <option value="Corbera de Llobregat">Corbera de Llobregat</option>
-        <option value="Cornellà de Llobregat">Cornellà de Llobregat</option>
-        <option value="El Masnou">El Masnou</option>
-        <option value="El Papiol">El Papiol</option>
-        <option value="El Prat de Llobregat">El Prat de Llobregat</option>
-        <option value="Esplugues de Llobregat">Esplugues de Llobregat</option>
-        <option value="Gavà">Gavà</option>
-        <option value="L'Hospitalet de Llobregat">L'Hospitalet de Llobregat</option>
-        <option value="La Palma de Cervelló">La Palma de Cervelló</option>
-        <option value="Molins de Rei">Molins de Rei</option>
-        <option value="Montcada i Reixac">Montcada i Reixac</option>
-        <option value="Montgat">Montgat</option>
-        <option value="Pallejà">Pallejà</option>
-        <option value="Ripollet">Ripollet</option>
-        <option value="Sant Adrià de Besòs">Sant Adrià de Besòs</option>
-        <option value="Sant Andreu de la Barca">Sant Andreu de la Barca</option>
-        <option value="Sant Boi de Llobregat">Sant Boi de Llobregat</option>
-        <option value="Sant Climent de Llobregat">Sant Climent de Llobregat</option>
-        <option value="Sant Cugat del Vallès">Sant Cugat del Vallès</option>
-        <option value="Sant Feliu de Llobregat">Sant Feliu de Llobregat</option>
-        <option value="Sant Joan Despí">Sant Joan Despí</option>
-        <option value="Sant Just Desvern">Sant Just Desvern</option>
-        <option value="Sant Vicenç dels Horts">Sant Vicenç dels Horts</option>
-        <option value="Santa Coloma de Cervelló">Santa Coloma de Cervelló</option>
-        <option value="Santa Coloma de Gramenet">Santa Coloma de Gramenet</option>
-        <option value="Tiana">Tiana</option>
-        <option value="Torrelles de Llobregat">Torrelles de Llobregat</option>
-        <option value="Viladecans">Viladecans</option>
-      </select>
-    </button>
     
     <button id="eliminar-filtros" class="mapboxgl-ctrl-icon" title="Treure filtres" aria-label="Treure filtres">Treure filtres</button>
 
@@ -256,7 +212,6 @@ var defaultFilters = {
   'fet': "",
   'tecnologia': "",
   'as_built': "",
-  'municipi': ""
 };
 
 // Función para aplicar los filtros
@@ -301,11 +256,6 @@ document.getElementById('select-as_built').addEventListener('change', function()
   applyFilters();
 });
 
-// Escuchar el cambio en el menú desplegable de municipio
-document.getElementById('select-municipi').addEventListener('change', function() {
-  filters['municipi'] = this.value;
-  applyFilters();
-});
 
 // Escuchar el clic en el botón "Treure filtres"
 document.getElementById('eliminar-filtres').addEventListener('click', function() {
@@ -316,18 +266,14 @@ document.getElementById('eliminar-filtres').addEventListener('click', function()
   document.getElementById('select-fet').value = defaultFilters['fet'];
   document.getElementById('select-tecnologia').value = defaultFilters['tecnologia'];
   document.getElementById('select-as_built').value = defaultFilters['as_built'];
-  document.getElementById('select-municipi').value = defaultFilters['municipi'];
   // Cambiar el texto de los botones a "Sensa filtre"
   document.getElementById('select-mandato').innerText = "Sensa filtre";
   document.getElementById('select-fet').innerText = "Sensa filtre";
   document.getElementById('select-tecnologia').innerText = "Sensa filtre";
   document.getElementById('select-as_built').innerText = "Sensa filtre";
-  document.getElementById('select-municipi').innerText = "Sensa filtre";
   // Aplicar los filtros
   applyFilters();
 });
-
-
 
 
 

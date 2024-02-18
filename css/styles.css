@@ -1,0 +1,236 @@
+ul, ol {
+    list-style: none;
+}
+
+h1, h2, h3, h4, h5, h6, pre, code {
+    font-size: 1em;
+}
+
+ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, body, html, p, blockquote, fieldset {
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+    list-style: none;
+}
+
+a img,
+:link img,
+:visited img,
+fieldset {
+    border: none;
+}
+
+input[type=submit],
+input[type=reset],
+input[type=button] {
+    filter: chroma(color=#000000);
+}
+
+body {
+    font-family: Arial;
+    font-size: 16px;
+    color: #000000;
+    background-color: #f1f1f1;
+}
+
+h1 {
+    font-family: 'Verdana';
+    font-size: 26px;
+    margin-bottom: 30px;
+    font-weight: normal;
+    line-height: 140%;
+    text-align: center; /* Centrar horizontalmente */
+    position: absolute; /* Establecer posición absoluta */
+    top: 50%; /* Centrar verticalmente */
+    left: 50%; /* Centrar horizontalmente */
+    transform: translate(-50%, -50%); /* Corregir la posición */
+}
+
+
+h2 {
+    font-family: Verdana;
+    font-size: 20px;
+    margin-bottom: 20px;
+    line-height: 140%;
+}
+
+h3 {
+    font-family: Verdana;
+    font-size: 18px;
+    margin-bottom: 10px;
+    line-height: 140%;
+}
+
+p {
+    margin-bottom: 20px;
+    text-align: left;
+    line-height: 140%;
+}
+
+strong {
+    font-size: 18px;
+    font-weight: normal;
+    color: #ffffff;
+}
+
+a {
+    background-color: #0000ff;
+    color: #ffffff;
+}
+
+hr {
+    clear: both;
+    height: 0;
+    line-height: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    filter: alpha(opacity=0);
+}
+
+div.header {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 60px;
+    z-index: 100;
+    background-color: #ffffff;
+}
+
+div.header p {
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    margin-top: -20px;
+    background-color: #ffffff;
+}
+
+div.header p img {
+    width: 200px;
+    height: auto; /* Para mantener la proporción de la imagen */
+}
+
+
+div.menu {
+    position: fixed;
+    left: 0;
+    top: 60px;
+    right: 0;
+    height: 30px;
+    text-align: left;
+    z-index: 100;
+    background-color: #4C4D4B;
+}
+
+div.menu ul {
+    padding-top: 7px;
+    padding-left: 30px;
+}
+
+div.menu ul li {
+    display: inline-block;
+    margin-right: 30px;
+}
+
+
+div.menu ul li a {
+    font-weight: bold;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+div.menu ul li a:hover {
+    color: #e28f57;
+}
+
+div.menu button {
+    padding: 0px 5px; /* Ajusta el relleno según sea necesario */
+    background-color: #4C4D4B; /* Color de fondo blanco */
+    border: 0; /* Sin borde */
+    text-align: center; /* Centrado del texto dentro del botón */
+    font-weight: bold;
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */    
+}
+
+div.menu button {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.wrapper {
+    width: auto;
+    padding: 10px;
+    margin: auto;
+    margin-top: 90px;
+    margin-bottom: 10px;
+    background-color: #ffffff;
+    border: solid 1px #ffffff;
+    border-top: none;
+}
+
+
+.more-info {
+    font-size: 18px;
+}
+
+.product-detail {
+    font-size: 20px;
+    width: 400px;
+    padding: 20px 20px 40px 20px;
+    margin: auto;
+    margin-bottom: 20px;
+    border: solid 10px #ff0000;
+    color: #ffffff;
+    background-color: blueviolet;
+    -webkit-box-shadow: 4px 6px 5px 0px rgba(47, 36, 145, 1);
+    -moz-box-shadow: 4px 6px 5px 0px rgba(47, 36, 145, 1);
+    box-shadow: 4px 6px 5px 0px rgba(47, 36, 145, 1);
+}
+
+.product-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+
+.product-item {
+    float: left;
+    position: relative;
+    padding: 10px 10px 10px 225px;
+    margin-bottom: 20px;
+    margin-right: 20px;
+    width: 200px;
+    height: 135px;
+    border: solid 1px #ff0000;
+    border-radius: 10px 0;
+}
+
+.product-item:hover {
+    background-color: #963611;
+}
+
+.product-item-img-container {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.product-item-img {
+    width: 200px;
+}
+
+.product-item-text {
+    margin-bottom: 0;
+}
+
+.product-main-image {
+    float: right;
+    margin-left: 20px;
+}
+
+#map {
+    height: 500px;
+    margin-bottom: 20px;
+    background-color: rgb(252, 252, 252);
+}

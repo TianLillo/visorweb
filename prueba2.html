@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Aixecaments topogràfics AMB</title>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.css' rel='stylesheet' />
+
+    <link href="css/styles.css" rel="stylesheet">
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.js'></script>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoidGlhbmxpbGxvIiwiYSI6ImNsY3ludnBmODBhY2Izcm5vYzRibzd3YXoifQ.gOZiyMs0U6_TPz_qK1nvIw';
+        var map;
+        function initialize() {
+            map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/tianlillo/clskq3n7o009201qwakqj8vg2',
+            center: [2.16859, 41.3954],
+            zoom: 10,
+            maxZoom: 20,
+            attributionControl: false,
+            hash: true
+            });
+        }
+
+        window.onload = initialize;
+    </script>
+</head>
+<body>
+<div class="header">
+    <p><img src="imagen/logo.png"/></p>
+    <h1>Aixecaments topogràfics de l'AMB</h1>
+</div>
+<div class="menu">
+    <ul>
+        <li><a href="index.html">Filtro1</a></li>
+        <li><a href="destacados.html">Filtro2</a></li>
+        <li><a href="mapa.html">Filtro3</a></li>
+    </ul>
+</div>
+<div class="wrapper">
+    <h2>Venta de productos de segunda mano</h1>
+    <div id="map" style="width: 100%; height: 500px;"></div>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <strong>Suspendisse elementum nulla</strong> quis euismod</p>
+    <hr/>
+    <h2>Sed aliquet mi vel quam luctus</h2>
+    <p class="more-info">In orci nisl, posuere in volutpat a, ultricies non mi. Mauris a vehicula magna, sed tincidunt urna.</p>
+    <p>Fusce nec nisi metus.</p>
+</div>
+</body>
+</html>
