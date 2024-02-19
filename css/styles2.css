@@ -1,0 +1,135 @@
+ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, body, html, p, blockquote, fieldset {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+a {
+    background-color: #0000ff00;
+    color: #ffffff;
+}
+
+a:hover {
+    color: #e28f57;
+}
+
+h1 {
+    font-family: 'Verdana';
+    font-size: 26px;
+    font-weight: normal;
+    line-height: 140%;
+    text-align: center; /* Centrar horizontalmente */
+    position: absolute; /* Establecer posición absoluta */
+    top: 40%; /* Centrar verticalmente */
+    left: 50%; /* Centrar horizontalmente */
+    transform: translate(-50%, -50%); /* Corregir la posición */
+}
+
+
+h2 {
+    font-family: 'Verdana';
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 140%;
+    text-align: center; /* Centrar horizontalmente */
+    position: absolute; /* Establecer posición absoluta */
+    top: 75%; /* Centrar verticalmente */
+    left: 50%; /* Centrar horizontalmente */
+    transform: translate(-50%, -50%); /* Corregir la posición */
+}
+
+body {
+    font-family: Arial;
+    font-size: 16px;
+    color: #000000;
+    background-color: #f1f1f1;
+}
+
+div.header {
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 60px;
+    z-index: 100;
+    background-color: #ffffff;
+}
+
+div.header p {
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    margin-top: -20px;
+    background-color: #ffffff;
+}
+
+div.header p img {
+    width: 200px;
+    height: auto; /* Para mantener la proporción de la imagen */
+}
+
+div.menu {
+    position: fixed;
+    left: 0;
+    top: 60px;
+    right: 0;
+    height: 30px;
+    text-align: left;
+    z-index: 100;
+    background-color: #4C4D4B;
+}
+
+div.menu ul {
+    padding-top: 7px;
+    padding-left: 30px;
+}
+
+div.menu ul li {
+    display: inline-block;
+    margin-right: 30px;
+}
+
+div.menu ul li a {
+    font-weight: bold;
+    text-decoration: none;
+}
+
+div.menu button {
+    padding: 0px 5px; /* Ajusta el relleno según sea necesario */
+    text-align: center; /* Centrado del texto dentro del botón */
+    font-weight: bold;
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */    
+}
+
+.filtro-btn {
+    background-color: white;
+    color: black;
+    font-weight: bold;
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 10px 20px;
+    display: inline-block; /* Para que el ancho se ajuste automáticamente */
+}
+
+.filtro-btn:hover {
+    background-color: #000000;
+    color:  #ffffff;
+    cursor: pointer;
+}
+
+.wrapper {
+    width: auto;
+    padding: 10px;
+    margin: auto;
+    margin-top: 90px;
+    margin-bottom: 10px;
+    background-color: #ffffff;
+    border: solid 1px #ffffff;
+    border-top: none;
+}
+
+#map {
+    height: 500px;
+    margin-bottom: 20px;
+    background-color: rgb(252, 252, 252);
+}

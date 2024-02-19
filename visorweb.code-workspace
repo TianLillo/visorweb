@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../3_Programacion_SIG_entornos_web/Ejercicios/EjerciciosHTML"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "visorweb"
+	}
+}

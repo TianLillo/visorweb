@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Aixecaments topogràfics AMB</title>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.css' rel='stylesheet' />
+
+    <link href="css/styles2.css" rel="stylesheet">
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.js'></script>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoidGlhbmxpbGxvIiwiYSI6ImNsY3ludnBmODBhY2Izcm5vYzRibzd3YXoifQ.gOZiyMs0U6_TPz_qK1nvIw';
+        var map;
+        var aixecamentsLayer;
+
+        function initialize() {
+            map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/tianlillo/clskq3n7o009201qwakqj8vg2',
+                center: [2.15, 41.4],
+                zoom: 10.5,
+                maxZoom: 20,
+                attributionControl: false,
+                hash: true
+            });
+
+            // Agregar capa de aixecaments desde el archivo geojson
+            map.on('load', function () {
+                map.addSource('aixecaments', {
+                    type: 'geojson',
+                    data: 'datos/aixecaments.geojson'
+                });
+
+                aixecamentsLayer = {
+                    'id': 'aixecaments-layer',
+                    'type': 'fill',
+                    'source': 'aixecaments',
+                    'layout': {},
+                    'paint': {
+                        'fill-color': '#088',
+                        'fill-opacity': 0.8
+                    }
+                };
+
+                map.addLayer(aixecamentsLayer);
+            });
+            map.on('click', 'aixecaments-layer', function (e) {
+                var features = e.features[0];
+                var popupContent = "<h3>" + features.properties.nom_aixeca + "</h3>" +
+                                "<p>Fecha: " + features.properties.fecha + "</p>" +
+                                "<p>Mandat: " + features.properties.mandat + "</p>" +
+                                "<p>Fet: " + features.properties.fet + "</p>" +
+                                "<p>Municipi: " + features.properties.municipi + "</p>" +
+                                "<p>Tecnologia: " + features.properties.tecnologia + "</p>";
+                
+                new mapboxgl.Popup()
+                    .setLngLat(e.lngLat)
+                    .setHTML(popupContent)
+                    .addTo(map);
+            });
+
+            // Cambia el cursor al pasar sobre los polígonos
+            map.on('mouseenter', 'aixecaments-layer', function () {
+                map.getCanvas().style.cursor = 'pointer';
+            });
+
+            // Cambia el cursor al salir de los polígonos
+            map.on('mouseleave', 'aixecaments-layer', function () {
+                map.getCanvas().style.cursor = '';
+            });
+
+        }
+
+        function filtrarAixecaments() {
+            var mandat = document.getElementById('mandat-filter').value;
+            var fet = document.getElementById('fet-filter').value;
+            var tecnologia = document.getElementById('tecnologia-filter').value;
+            var as_built = document.getElementById('as-built-filter').value;
+            var municipi = document.getElementById('municipi-filter').value;
+            var filters = ['all'];
+
+            if (mandat !== '') {
+                filters.push(['==', 'mandat', mandat]);
+            }
+
+            if (fet !== '') {
+                filters.push(['==', 'fet', fet]);
+            }
+
+            if (tecnologia !== '') {
+                filters.push(['==', 'tecnologia', tecnologia]);
+            }
+
+            if (as_built !== '') {
+                filters.push(['==', 'as_built', as_built]);
+            }
+
+            if (municipi !== '') {
+                filters.push(['==', 'municipi', municipi]);
+            }
+
+            map.setFilter('aixecaments-layer', filters);
+        }
+
+        function aplicarFiltros() {
+            filtrarAixecaments();
+        }
+
+        window.onload = initialize;
+    </script>
+</head>
+<body>
+<div class="header">
+    <p><img src="imagen/logo.png"/></p>
+    <h1>Aixecaments topogràfics de l'AMB</h1>
+    <h2>Departament de topografia</h2>
+</div>
+<div class="menu">
+    <ul>
+        <li><a>Mandat</a>
+            <select id="mandat-filter">
+                <option value="">Tots</option>
+                <option value="2008-2011">2008-2011</option>
+                <option value="2012-2015">2012-2015</option>
+                <option value="2016-2019">2016-2019</option>
+                <option value="2020-2023">2020-2023</option>
+                <option value="2024-2027">2024-2027</option>
+            </select>
+        </li>
+        <li><a>Fet</a>
+            <select id="fet-filter">
+                <option value="">Tots</option>
+                <option value="Intern">Intern</option>
+                <option value="Extern">Extern</option>
+                <option value="S/I">S/I</option>
+            </select>
+        </li>
+        <li><a>Tecnologia</a>
+            <select id="tecnologia-filter">
+                <option value="">Tots</option>
+                <option value="ET/GPS">ET y GPS</option>
+                <option value="GPS">GPS</option>
+                <option value="LS">Laser scanner</option>
+                <option value="NIVELL">Nivell</option>
+            </select>
+        </li>
+        <li><a>As Built</a>
+            <select id="as-built-filter">
+                <option value="">Tots</option>
+                <option value="si">Si</option>
+                <option value="no">No</option>
+            </select>
+        </li>
+        <li><a>Municipi</a>
+            <select id="municipi-filter">
+                <option value="">Tots</option>
+                <option value="Badalona">Badalona</option>
+                <option value="Badia del Vallès">Badia del Vallès</option>
+                <option value="Barberà del Vallès">Barberà del Vallès</option>
+                <option value="Barcelona">Barcelona</option>
+                <option value="Begues">Begues</option>
+                <option value="Castellbisbal">Castellbisbal</option>
+                <option value="Castelldefels">Castelldefels</option>
+                <option value="Cerdanyola del Vallès">Cerdanyola del Vallès</option>
+                <option value="Cervelló">Cervelló</option>
+                <option value="Corbera de Llobregat">Corbera de Llobregat</option>
+                <option value="Cornellà de Llobregat">Cornellà de Llobregat</option>
+                <option value="El Masnou">El Masnou</option>
+                <option value="El Papiol">El Papiol</option>
+                <option value="El Prat de Llobregat">El Prat de Llobregat</option>
+                <option value="Esplugues de Llobregat">Esplugues de Llobregat</option>
+                <option value="Gavà">Gavà</option>
+                <option value="L'Hospitalet de Llobregat">L'Hospitalet de Llobregat</option>
+                <option value="La Palma de Cervelló">La Palma de Cervelló</option>
+                <option value="Molins de Rei">Molins de Rei</option>
+                <option value="Montcada i Reixac">Montcada i Reixac</option>
+                <option value="Montgat">Montgat</option>
+                <option value="Pallejà">Pallejà</option>
+                <option value="Ripollet">Ripollet</option>
+                <option value="Sant Adrià de Besòs">Sant Adrià de Besòs</option>
+                <option value="Sant Andreu de la Barca">Sant Andreu de la Barca</option>
+                <option value="Sant Boi de Llobregat">Sant Boi de Llobregat</option>
+                <option value="Sant Climent de Llobregat">Sant Climent de Llobregat</option>
+                <option value="Sant Cugat del Vallès">Sant Cugat del Vallès</option>
+                <option value="Sant Feliu de Llobregat">Sant Feliu de Llobregat</option>
+                <option value="Sant Joan Despí">Sant Joan Despí</option>
+                <option value="Sant Just Desvern">Sant Just Desvern</option>
+                <option value="Sant Vicenç dels Horts">Sant Vicenç dels Horts</option>
+                <option value="Santa Coloma de Cervelló">Santa Coloma de Cervelló</option>
+                <option value="Santa Coloma de Gramenet">Santa Coloma de Gramenet</option>
+                <option value="Tiana">Tiana</option>
+                <option value="Torrelles de Llobregat">Torrelles de Llobregat</option>
+                <option value="Viladecans">Viladecans</option>
+            </select>
+        </li>
+        <li><button class="filtro-btn" onclick="aplicarFiltros()">¡Filtra!</button></li>
+    </ul>
+</div>
+
+<div class="wrapper">
+    <div id="map" style="width: 100%; height: 600px;"></div>
+</div>
+</body>
+</html>
