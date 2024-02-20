@@ -3,8 +3,7 @@
 <head>
     <title>Aixecaments topogràfics AMB</title>
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.css' rel='stylesheet' />
-
-    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/styles2.css" rel="stylesheet">
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.js'></script>
     <script>
         mapboxgl.accessToken = 'pk.eyJ1IjoidGlhbmxpbGxvIiwiYSI6ImNsY3ludnBmODBhY2Izcm5vYzRibzd3YXoifQ.gOZiyMs0U6_TPz_qK1nvIw';
@@ -41,6 +40,9 @@
                 };
 
                 map.addLayer(aixecamentsLayer);
+
+                // Contar elementos al iniciar
+                contarElementosGeoJSON();
             });
         }
 
@@ -64,6 +66,19 @@
             filtrarAixecaments();
         }
 
+
+
+        function contarElementosGeoJSON() {
+            fetch('datos/aixecaments.geojson')
+                .then(response => response.json())
+                .then(data => {
+                    var count = data.features.length;
+                    var resultadoElement = document.getElementById('resultado');
+                    resultadoElement.textContent = "Existe un total de " + count + " levantamientos";
+                })
+                .catch(error => console.error('Error al contar elementos:', error));
+        }
+        
         window.onload = initialize;
     </script>
 </head>
@@ -98,6 +113,10 @@
 
 <div class="wrapper">
     <div id="map" style="width: 100%; height: 600px;"></div>
+</div>
+<div class="bottom">
+    <div id="resultado"></div>
+
 </div>
 </body>
 </html>
