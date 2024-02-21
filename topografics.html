@@ -72,6 +72,21 @@
               "fill-outline-color": "#000",
             },
           };
+          // Añadir la capa de polígonos 'municipis.geojson'
+          map.addSource("municipis-source", {
+            type: "geojson",
+            data: "datos/municipis.geojson",
+          });
+
+          map.addLayer({
+            id: "municipis-layer",
+            type: "line",
+            source: "municipis-source",
+            paint: {
+              "line-color": "#000",
+              "line-width": 1,
+            },
+          });
 
           map.addLayer(aixecamentsLayer);
         });
@@ -189,45 +204,43 @@
       }
 
       function filtrarAixecaments() {
-    var mandat = document.getElementById("mandat-filter").value;
-    var fet = document.getElementById("fet-filter").value;
-    var tecnologia = document.getElementById("tecnologia-filter").value;
-    var as_built = document.getElementById("as-built-filter").value;
-    var municipi = document.getElementById("municipi-filter").value;
-    var filters = ["all"];
+        var mandat = document.getElementById("mandat-filter").value;
+        var fet = document.getElementById("fet-filter").value;
+        var tecnologia = document.getElementById("tecnologia-filter").value;
+        var as_built = document.getElementById("as-built-filter").value;
+        var municipi = document.getElementById("municipi-filter").value;
+        var filters = ["all"];
 
-    var features = map.querySourceFeatures("aixecaments-layer");
+        var features = map.querySourceFeatures("aixecaments-layer");
 
-    if (mandat !== "") {
-        filters.push(["==", "mandat", mandat]);
-    }
+        if (mandat !== "") {
+          filters.push(["==", "mandat", mandat]);
+        }
 
-    if (fet !== "") {
-        filters.push(["==", "fet", fet]);
-    }
+        if (fet !== "") {
+          filters.push(["==", "fet", fet]);
+        }
 
-    if (tecnologia !== "") {
-        filters.push(["==", "tecnologia", tecnologia]);
-    }
+        if (tecnologia !== "") {
+          filters.push(["==", "tecnologia", tecnologia]);
+        }
 
-    if (as_built !== "") {
-        filters.push(["==", "as_built", as_built]);
-    }
+        if (as_built !== "") {
+          filters.push(["==", "as_built", as_built]);
+        }
 
-    if (municipi !== "") {
-        filters.push(["==", "municipi", municipi]);
-    }
+        if (municipi !== "") {
+          filters.push(["==", "municipi", municipi]);
+        }
 
-    map.setFilter("aixecaments-layer", filters);
+        map.setFilter("aixecaments-layer", filters);
 
-    var filtersLength = filters.length;
-    console.log("Longitud del array de filtros:", filtersLength);
-}
-
+        var filtersLength = filters.length;
+        console.log("Longitud del array de filtros:", filtersLength);
+      }
 
       function aplicarFiltros() {
-        filtrarAixecaments()
-        ;
+        filtrarAixecaments();
       }
 
       function contarElementos() {
@@ -273,7 +286,6 @@
         if (municipi !== "") {
           filters.push(["==", "municipi", municipi]);
         }
-
 
         // Obtener solo los polígonos filtrados
         fetch("datos/aixecaments.geojson")
