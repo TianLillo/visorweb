@@ -15,7 +15,6 @@
         var aixecamentsLayer;
         var selectedPolygonId = null;
         var marker = null; // Variable para almacenar la referencia al marcador
-        var num_aixecaments;
 
         function initialize() {
             map = new mapboxgl.Map({
@@ -186,20 +185,71 @@ map.on('click', 'aixecaments-layer', function (e) {
         function aplicarFiltros() {
             filtrarAixecaments();
         }
-        function contarElementosGeoJSON() {
+
+        function descargarPoligonosFiltrados() {
+    // Obtener los filtros actuales
+    var mandat = document.getElementById('mandat-filter').value;
+    var fet = document.getElementById('fet-filter').value;
+    var tecnologia = document.getElementById('tecnologia-filter').value;
+    var as_built = document.getElementById('as-built-filter').value;
+    var municipi = document.getElementById('municipi-filter').value;
+    
+    // Construir los filtros basados en las selecciones actuales
+    var filters = ['all'];
+    if (mandat !== '') {
+        filters.push(['==', 'mandat', mandat]);
+    }
+    if (fet !== '') {
+        filters.push(['==', 'fet', fet]);
+    }
+    if (tecnologia !== '') {
+        filters.push(['==', 'tecnologia', tecnologia]);
+    }
+    if (as_built !== '') {
+        filters.push(['==', 'as_built', as_built]);
+    }
+    if (municipi !== '') {
+        filters.push(['==', 'municipi', municipi]);
+    }
+
+    // Aplicar los filtros a la capa actual
+    map.setFilter('aixecaments-layer', filters);
+
+    // Obtener solo los polígonos filtrados
     fetch('datos/aixecaments.geojson')
         .then(response => response.json())
         .then(data => {
-            var count = data.features.length;
-            var num_aixecaments = count; // Asignar el valor de count a la variable
-            var resultadoElement = document.getElementById('resultado');
-            resultadoElement.textContent = "ACÁ EL RESULTADO: " + count;
+            // Filtrar solo los polígonos que coinciden con los filtros actuales
+            const filteredFeatures = data.features.filter(feature => {
+                let properties = feature.properties;
+                return (properties.mandat === mandat || mandat === '') &&
+                    (properties.fet === fet || fet === '') &&
+                    (properties.tecnologia === tecnologia || tecnologia === '') &&
+                    (properties.as_built === as_built || as_built === '') &&
+                    (properties.municipi === municipi || municipi === '');
+            });
+
+            // Convertir los polígonos filtrados en formato de texto
+            const featuresText = filteredFeatures.map(feature => {
+                const properties = feature.properties;
+                return `${properties.OBJECTID}, ${properties.nom_aixeca}, ${properties.municipi}`;
+            }).join('\n');
+
+            // Crear un Blob y descargar el archivo de texto
+            const blob = new Blob([featuresText], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'poligonos_filtrados.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
         })
-        .catch(error => console.error('Error al contar elementos:', error));
+        .catch(error => console.error('Error al descargar polígonos filtrados:', error));
 }
-        window.onload = function() {
-            initialize();
-        };
+
+
+        window.onload = initialize;
     </script>
 </head>
 <body>
@@ -250,7 +300,40 @@ map.on('click', 'aixecaments-layer', function (e) {
                 <option value="Badalona">Badalona</option>
                 <option value="Badia del Vallès">Badia del Vallès</option>
                 <option value="Barberà del Vallès">Barberà del Vallès</option>
-
+                <option value="Barcelona">Barcelona</option>
+                <option value="Begues">Begues</option>
+                <option value="Castellbisbal">Castellbisbal</option>
+                <option value="Castelldefels">Castelldefels</option>
+                <option value="Cerdanyola del Vallès">Cerdanyola del Vallès</option>
+                <option value="Cervelló">Cervelló</option>
+                <option value="Corbera de Llobregat">Corbera de Llobregat</option>
+                <option value="Cornellà de Llobregat">Cornellà de Llobregat</option>
+                <option value="El Masnou">El Masnou</option>
+                <option value="El Papiol">El Papiol</option>
+                <option value="El Prat de Llobregat">El Prat de Llobregat</option>
+                <option value="Esplugues de Llobregat">Esplugues de Llobregat</option>
+                <option value="Gavà">Gavà</option>
+                <option value="L'Hospitalet de Llobregat">L'Hospitalet de Llobregat</option>
+                <option value="La Palma de Cervelló">La Palma de Cervelló</option>
+                <option value="Molins de Rei">Molins de Rei</option>
+                <option value="Montcada i Reixac">Montcada i Reixac</option>
+                <option value="Montgat">Montgat</option>
+                <option value="Pallejà">Pallejà</option>
+                <option value="Ripollet">Ripollet</option>
+                <option value="Sant Adrià de Besòs">Sant Adrià de Besòs</option>
+                <option value="Sant Andreu de la Barca">Sant Andreu de la Barca</option>
+                <option value="Sant Boi de Llobregat">Sant Boi de Llobregat</option>
+                <option value="Sant Climent de Llobregat">Sant Climent de Llobregat</option>
+                <option value="Sant Cugat del Vallès">Sant Cugat del Vallès</option>
+                <option value="Sant Feliu de Llobregat">Sant Feliu de Llobregat</option>
+                <option value="Sant Joan Despí">Sant Joan Despí</option>
+                <option value="Sant Just Desvern">Sant Just Desvern</option>
+                <option value="Sant Vicenç dels Horts">Sant Vicenç dels Horts</option>
+                <option value="Santa Coloma de Cervelló">Santa Coloma de Cervelló</option>
+                <option value="Santa Coloma de Gramenet">Santa Coloma de Gramenet</option>
+                <option value="Tiana">Tiana</option>
+                <option value="Torrelles de Llobregat">Torrelles de Llobregat</option>
+                <option value="Viladecans">Viladecans</option>
             </select>
         </li>
         <li><button class="filtro-btn" onclick="aplicarFiltros()">Filtra</button></li>
@@ -262,7 +345,7 @@ map.on('click', 'aixecaments-layer', function (e) {
     <div id="map" style="width: 100%; height: 780px;"></div>
 </div>
 <div class="bottom">
-    <p> num_aixecaments </p>
+    <button onclick="descargarPoligonosFiltrados()">Descargar Polígonos Filtrados</button>
 </div>
 </body>
 </html>

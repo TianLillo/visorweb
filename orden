@@ -2,14 +2,17 @@ prueba 3-- visual lista, sin polígonos.
 prueba 4-- visual lista, polígonos cargados.
 prueba 5-- visual lista, polígonos cargados, filtro no muestra todos.
 prueba 6-- visual lista, polígonos cargados. filtro muestra todos SOLO 1 FILTRO MANDAT. (arreglo con filtro objectid).
-prueba 7-- Copia prueba3 + filtro prueba 6 +PRUEBA MÀS DE UN FILTRO. SE CAMBIA EL FILTRO AUTOMATICO A BOTÓN DE FILTRO. -- contador
-
+prueba7a-- Copia prueba3 + filtro prueba 6 +PRUEBA MÀS DE UN FILTRO. SE CAMBIA EL FILTRO AUTOMATICO A BOTÓN DE FILTRO. -- contador
+prueba7-- Copia 7, añade contador de polìgonos total.
+prueba7b-- Copia 7, 
 prueba 8-- prueba 7 y se agregan demás categorías de filtros + botón "filtrar"
 prueba 9-- prueba 8, con filtros y css. Se agrega popup.
 prueba 10--prueba 9, con colores de los polìgonos y diferenciados los asbuilt. Geocoder (busqueda de sitios)
 prueba 11-- prueba 10, resaltar polìgonos seleccionados.
 prueba 12-- prueba 11, polígonos definitivo. terreno 3d.
 prueba 13-- prueba 12, sin 3d, se agrega botón de exportar datos en .txt
+prueba 14-- prueba 13, se modifica botòn exportar datos por prueba 7b.
+prueba 15-- prueba 14, todo funcionando, se debe agregar "contador de archivos activos en la pantalla"
 
 
 

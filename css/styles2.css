@@ -133,35 +133,38 @@ div.bottom {
     left: 0;
     bottom: 0px;
     right: 0;
-    height: 30px;
+    height: 35px;
     text-align: right;
     z-index: 100;
     background-color: #4C4D4B;
 }
 
-.contador {
-    text-align: center;
-    font-size: 15;
+div.bottom p {
+
+    margin-top: 6px;
+    font-weight: bold;
     color: #ffffff;
 }
 
-.exportar-btn {
+div.bottom button {
     font-size: 12px;
-
+    margin-bottom: 0;
     padding: 05px 20px; /* Espacio alrededor del texto dentro del botón */
     border: 1px solid black; /* Borde del botón */
     border-radius: 10px; /* Borde redondeado */
-    margin-right: 60px; /* Espacio de 30px desde la derecha */
+    margin-right: 100px; /* Espacio de 30px desde la derecha */
     background-color: white; /* Color de fondo del botón */
     color: black; /* Color del texto del botón */
     font-weight: bold;
 }
 
-.exportar-btn:hover {
+div.bottom button:hover {
     background-color: #000000;
     color:  #ffffff;
     cursor: pointer;
 }
+
+
 
 #map {
     margin-bottom: 10px;
